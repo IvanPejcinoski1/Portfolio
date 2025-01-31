@@ -27,6 +27,8 @@ const ProjectDetails = () => {
   const [project, setProject] = useState<Project | null>(null);
   const [isAbout, setIsAbout] = useState<boolean>(true);
 
+  console.log("isAbout:", isAbout);
+
   useEffect(() => {
     if (id) {
       const foundProject = data.projects.find(
@@ -95,14 +97,18 @@ const ProjectDetails = () => {
           <Carousel index={index} onIndexChange={setIndex}>
             <CarouselContent className="relative">
               {project.allImages?.map((item) => (
-                <CarouselItem key={item} className="p-4 m-0">
+                <CarouselItem key={item} className="p-4 m-0 mt-5">
                   <div className="flex items-center justify-center">
                     <Image
                       height={300}
                       width={740}
                       alt={project.title}
                       src={item}
-                      style={{ objectFit: "cover", borderRadius: "8px" }}
+                      style={{
+                        objectFit: "contain",
+                        borderRadius: "8px",
+                        height: "400px",
+                      }}
                     />
                   </div>
                 </CarouselItem>
@@ -116,14 +122,17 @@ const ProjectDetails = () => {
                   key={item}
                   aria-label={`Go to slide ${index + 1}`}
                   onClick={() => setIndex(index)}
-                  className="cursor-pointer border border-zinc-200 dark:border-zinc-800 relative"
+                  className="cursor-pointer  relative pt-5 mt-3"
                 >
                   <Image
                     height={110}
-                    width={110}
+                    width={150}
                     alt={project.title}
                     src={item}
-                    style={{ objectFit: "cover", borderRadius: "8px" }}
+                    style={{
+                      objectFit: "contain",
+                      borderRadius: "8px",
+                    }}
                   />
                 </div>
               ))}
@@ -142,13 +151,17 @@ const ProjectDetails = () => {
 
           <h1 className="text-4xl font-bold mb-2">{project.title}</h1>
           <button
-            className="text-l text-gray-600  items-center space-x-2 me-6 font-semibold py-1 px-2 hover:bg-emerald-400 rounded"
+            className={`text-l text-gray-600   items-center space-x-2 me-6 font-semibold py-1 px-2 hover:bg-emerald-400 rounded ${
+              isAbout ? "bg-emerald-300" : ""
+            }`}
             onClick={() => setIsAbout(true)}
           >
             About
           </button>
           <button
-            className="text-l bg-emerald-300 rounded  text-gray-600 items-center space-x-2  font-semibold py-1 px-2 hover:bg-emerald-400"
+            className={`text-l  rounded  text-gray-600 items-center space-x-2  font-semibold py-1 px-2 hover:bg-emerald-400 ${
+              !isAbout ? "bg-emerald-300" : ""
+            }`}
             type="button"
             onClick={() => setIsAbout(false)}
           >
